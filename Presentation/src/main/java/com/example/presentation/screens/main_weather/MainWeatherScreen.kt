@@ -13,6 +13,7 @@ import org.koin.androidx.compose.getViewModel
 fun MainWeatherScreen() {
     Column(Modifier.fillMaxSize()) {
         Text(text = "Hello gela!")
+
     }
     val vm = getViewModel<MainWeatherVm>()
     Log.d("RESPONSESTATE","${vm.screenState.collectAsState().value}")
