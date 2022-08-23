@@ -1,4 +1,4 @@
-package com.example.presentation.common
+package com.example.presentation.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,7 +19,8 @@ fun CustomTextDialog(
     positiveButtonText: String = "OK",
     negativeButtonText: String = "Cancel",
     messageText: String,
-    onButtonClick: (Boolean) -> Unit,
+    onPositiveClick: (Boolean) -> Unit,
+    onNegativeClick: (Boolean) -> Unit,
 ) {
     Dialog(
         onDismissRequest = { onDismiss.invoke(false) },
@@ -32,16 +33,17 @@ fun CustomTextDialog(
 
             Column(modifier = Modifier.padding(21.dp)) {
                 Text(text = messageText, modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
-                Row {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     TextButton(
-                        onClick = { onButtonClick.invoke(false) },
-                        modifier = Modifier.fillMaxWidth(0.5f)
+                        onClick = { onNegativeClick.invoke(false) },
+                        modifier = Modifier.fillMaxWidth()
                     ) {
                         Text(text = negativeButtonText, textAlign = TextAlign.Center)
                     }
+                    Spacer(modifier = Modifier.height(5.dp))
                     TextButton(
-                        onClick = { onButtonClick.invoke(false) },
-                        modifier = Modifier.fillMaxWidth(0.5f)
+                        onClick = { onPositiveClick.invoke(false) },
+                        modifier = Modifier.fillMaxWidth()
                     ) {
                         Text(text = positiveButtonText, textAlign = TextAlign.Center)
                     }

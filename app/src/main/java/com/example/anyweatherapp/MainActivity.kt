@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.example.anyweatherapp.ui.theme.AnyWeatherAppTheme
-import com.example.presentation.common.CustomTextDialog
+import com.example.presentation.components.CustomTextDialog
 import com.example.presentation.screens.main_weather.MainWeatherScreen
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
@@ -81,10 +81,11 @@ class MainActivity : ComponentActivity() {
                         onDismiss = { showDialog.value = it },
                         positiveButtonText = "Request",
                         messageText = "Any Weather needs this permission to work correctly",
-                        onButtonClick = {
+                        onPositiveClick = {
                             showDialog.value = it
                             permissionState.launchMultiplePermissionRequest()
-                        }
+                        },
+                        onNegativeClick = { showDialog.value = it }
                     )
                 }
             }

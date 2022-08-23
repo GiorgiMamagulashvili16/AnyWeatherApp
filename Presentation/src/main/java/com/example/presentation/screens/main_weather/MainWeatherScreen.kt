@@ -16,5 +16,5 @@ fun MainWeatherScreen() {
 
     }
     val vm = getViewModel<MainWeatherVm>()
-    Log.d("RESPONSESTATE","${vm.screenState.collectAsState().value}")
+    Log.d("RESPONSESTATE","${vm.locationState.collectAsState().value}")
 }

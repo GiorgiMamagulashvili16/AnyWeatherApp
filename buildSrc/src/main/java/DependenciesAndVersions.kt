@@ -20,6 +20,7 @@ object Versions {
     const val ESPRESSO = "3.4.0"
     const val JUNIT_CORE = "4.13.2"
     const val PERMISSION = "0.21.1-beta"
+    const val FUSED_LOCATION = "20.0.0"
 }
 
 object Compose {
@@ -61,4 +62,8 @@ object Test {
 }
 object  Permission {
     const val PERMISSION = "com.google.accompanist:accompanist-permissions:${Versions.PERMISSION}"
+}
+
+object Location {
+    const val FUSED_LOCATION = "com.google.android.gms:play-services-location:${Versions.FUSED_LOCATION}"
 }
