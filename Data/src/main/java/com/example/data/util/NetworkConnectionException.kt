@@ -1,4 +1,4 @@
-package com.example.data.datasource.network.util
+package com.example.data.util
 
 import java.io.IOException
 

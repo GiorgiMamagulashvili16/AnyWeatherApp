@@ -51,6 +51,7 @@ dependencies {
     implementation project(':Domain')
     implementation project(':Presentation')
     implementation (Kotlin.kotlinCore)
+    implementation (Koin.KOIN_ANDROID)
     implementation(Lifecycle.lifecycle)
     implementation(Compose.composeUi)
     implementation(Compose.composeMaterial)

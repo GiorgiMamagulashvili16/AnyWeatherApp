@@ -1,4 +1,4 @@
-package com.example.data.datasource.network.util
+package com.example.data.util
 
 import okhttp3.Interceptor
 import okhttp3.Request

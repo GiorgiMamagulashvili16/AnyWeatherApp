@@ -18,6 +18,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion  "1.1.0-beta04"
+        kotlinCompilerVersion '1.6.0'
+    }
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -25,4 +29,7 @@ android {
 
 dependencies {
     implementation (Kotlin.kotlinCore)
+    implementation(Coroutines.COROUTINE_CORE)
+    implementation(Coroutines.COROUTINE)
+    implementation (Koin.KOIN_ANDROID)
 }

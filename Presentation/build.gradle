@@ -18,11 +18,28 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion  "1.1.0-beta04"
+        kotlinCompilerVersion '1.6.0'
+    }
+    buildFeatures {
+        compose true
+    }
     kotlinOptions {
         jvmTarget = "1.8"
     }
 }
 
 dependencies {
+    implementation project(':Domain')
     implementation (Kotlin.kotlinCore)
+    implementation(Compose.composeUi)
+    implementation(Compose.composeMaterial)
+    implementation(Compose.composeToolingPreview)
+    implementation(Compose.composeActivity)
+    implementation(Compose.composeTooling)
+    implementation(Lifecycle.lifecycle)
+    implementation(Coroutines.COROUTINE_CORE)
+    implementation(Coroutines.COROUTINE)
+    implementation(Koin.KOIN_ANDROID)
 }

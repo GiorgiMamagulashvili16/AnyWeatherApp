@@ -20,12 +20,16 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
 }
 
 dependencies {
+    implementation project(':Domain')
     implementation (Kotlin.kotlinCore)
     implementation (Koin.KOIN_ANDROID)
     implementation (Retrofit.RETROFIT)
     implementation (Retrofit.GSON)
     implementation (Retrofit.INTERCEPTOR)
+    implementation(Coroutines.COROUTINE_CORE)
+    implementation(Coroutines.COROUTINE)
 }

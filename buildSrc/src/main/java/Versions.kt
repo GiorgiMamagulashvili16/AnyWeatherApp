@@ -47,5 +47,5 @@ object Retrofit {
 }
 
 object Koin {
-    const val KOIN_ANDROID = "io.insert-koin:koin-android:${Versions.KOIN}"
+    const val KOIN_ANDROID = "io.insert-koin:koin-androidx-compose:${Versions.KOIN}"
 }
