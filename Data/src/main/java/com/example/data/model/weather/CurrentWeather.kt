@@ -3,12 +3,11 @@ package com.example.data.model.weather
 import com.google.gson.annotations.SerializedName
 
 data class CurrentWeather(
-    val temperature: Double,
-    val time: String,
+    val time: List<String>,
+    @SerializedName("temperature_2m")
+    val temperature: List<Double>,
     @SerializedName("weathercode")
-    val weatherCode: Int,
-    @SerializedName("winddirection")
-    val windDirection: Int,
-    @SerializedName("windspeed")
-    val windSpeed: Double
+    val weatherCode: List<Double>,
+    @SerializedName("windspeed_10m")
+    val windSpeed: List<Double>,
 )

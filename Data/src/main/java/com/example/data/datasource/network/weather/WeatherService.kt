@@ -7,11 +7,10 @@ import retrofit2.http.Query
 
 interface WeatherService {
 
-    @GET("/v1/forecast")
+    @GET("/v1/forecast?hourly=temperature_2m,weathercode,windspeed_10m")
     suspend fun getHourlyWeather(
         @Query("latitude") lat: Double,
         @Query("longitude") long: Double,
-        @Query("hourly") hourlyParam: String = "temperature_2m",
         @Query("timezone") timeZone: String,
     ): Response<HourlyWeatherResponse>
 }

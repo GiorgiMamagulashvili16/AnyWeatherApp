@@ -1,6 +1,7 @@
 package com.example.anyweatherapp.app
 
 import android.app.Application
+import com.example.data.di.locationModule
 import com.example.data.di.networkModule
 import com.example.data.di.repositoryModule
 import com.example.domain.di.useCaseModule
@@ -14,7 +15,11 @@ class WeatherApp:Application() {
         super.onCreate()
         startKoin {
             androidContext(this@WeatherApp)
-            modules(listOf( repositoryModule, useCaseModule, mainScreenModule, networkModule))
+            modules(listOf(repositoryModule,
+                useCaseModule,
+                mainScreenModule,
+                networkModule,
+                locationModule))
         }
     }
 }

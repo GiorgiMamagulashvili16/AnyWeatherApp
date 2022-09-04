@@ -1,42 +1,52 @@
 package com.example.presentation.screens.main_weather
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
+import android.location.Location
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.CityModel
-import com.example.domain.usecase.GetCitiesUsecase
+import com.example.domain.model.weather.WeatherModel
+import com.example.domain.usecase.weather.GetHourlyWeather
 import com.example.domain.util.ResponseState
-import com.example.presentation.util.LocationManager
-import com.example.presentation.util.LocationManagerState
+import com.example.domain.util.location.LocationService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class MainWeatherVm(
-    private val getCitiesUsecase: GetCitiesUsecase,
-    private val locationManager: LocationManager,
+    private val getHourlyWeather: GetHourlyWeather,
+    private val locationService: LocationService,
 ) : ViewModel() {
 
     private val _screenState = MutableStateFlow<ResponseState<List<CityModel>>>(ResponseState())
     val screenState: StateFlow<ResponseState<List<CityModel>>> = _screenState
 
-    private val _locationState = MutableStateFlow<LocationManagerState>(LocationManagerState())
-    val locationState: StateFlow<LocationManagerState> = _locationState
+    private val _locationState = MutableStateFlow<Location?>(null)
+    val locationState: StateFlow<Location?> = _locationState
+
+    private val _hourlyWeatherData = MutableStateFlow<ResponseState<WeatherModel>>(ResponseState())
+    val hourlyWeatherData: StateFlow<ResponseState<WeatherModel>> = _hourlyWeatherData
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
-            locationManager.getLocation {
-                _locationState.value = it
-            }
-            _screenState.emit(ResponseState(isLoading = true))
-            val response = getCitiesUsecase.getCities("tb")
+        getHourlyWeather()
+    }
 
-            response.data?.let {
-                _screenState.emit(ResponseState(data = it))
-            } ?: kotlin.run {
-                _screenState.emit(ResponseState(errorMessage = response.errorMessage))
+    private fun getHourlyWeather() = viewModelScope.launch(Dispatchers.IO) {
+        _hourlyWeatherData.emit(ResponseState(isLoading = true))
+        locationService.getLocation { loc ->
+            loc?.let { location ->
+
+                viewModelScope.launch {
+                    val response = getHourlyWeather.getHourlyWeather(42.116710, 44.056576)
+
+                    response.data?.let {
+                        _hourlyWeatherData.emit(ResponseState(data = WeatherModel(it)))
+                    } ?: kotlin.run {
+                        _hourlyWeatherData.emit(ResponseState(errorMessage = response.errorMessage))
+                    }
+                }
+            } ?:  kotlin.run {
+                _hourlyWeatherData.value = ResponseState(errorMessage = "null")
             }
         }
     }

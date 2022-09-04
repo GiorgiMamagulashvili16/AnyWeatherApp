@@ -1,33 +1,46 @@
 package com.example.data.model.weather
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.domain.model.weather.CurrentWeatherModel
+import com.example.domain.model.weather.WeatherInfo
 import com.example.domain.model.weather.WeatherModel
+import com.example.domain.util.mapWeatherType
 import com.google.gson.annotations.SerializedName
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 data class HourlyWeatherResponse(
-    @SerializedName("current_weather")
-    val currentWeather: CurrentWeather,
-    val elevation: Double,
-    @SerializedName("generationtime_ms")
-    val generationTimeMs: Double,
-    val hourly: HashMap<String, List<Any>>,
-    @SerializedName("hourly_units")
-    val hourlyUnits: HashMap<String, String>,
-    val latitude: Double,
-    val longitude: Double,
-    val timezone: String,
-    @SerializedName("timezone_abbreviation")
-    val timezoneAbbreviation: String,
-    @SerializedName("utc_offset_seconds")
-    val utcOffsetSeconds: Int,
+   @SerializedName("hourly")
+   val weatherData: CurrentWeather
 ) {
-    fun toWeatherResponse() = WeatherModel(
-        currentWeather = CurrentWeatherModel(
-            weatherCode = currentWeather.weatherCode,
-            windSpeed = currentWeather.windSpeed,
-            time = currentWeather.time,
-            temperature = currentWeather.temperature
-        ),
-        weatherMap = hourly
+    data class WeatherDataWithIndex(
+        val index: Int,
+        val model: WeatherInfo
     )
+
+
+}
+@RequiresApi(Build.VERSION_CODES.O)
+fun CurrentWeather.toWeatherMapResponse(): Map<Int,List<WeatherInfo>> {
+    return time.mapIndexed { index, time ->
+        val temperature = temperature[index]
+        val weatherCode = weatherCode[index]
+        val windSpeed = windSpeed[index]
+
+        val weatherInfoModel = WeatherInfo(
+            time = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME).toString(),
+            temperature = temperature,
+            weatherType = weatherCode.toInt().mapWeatherType(),
+            windSpeed = windSpeed
+        )
+        HourlyWeatherResponse.WeatherDataWithIndex(
+            index = index,
+            model = weatherInfoModel
+        )
+    }.groupBy {
+        it.index / 24
+    }.mapValues {
+        it.value.map { it.model }
+    }
 }
