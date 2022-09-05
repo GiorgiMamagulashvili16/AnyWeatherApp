@@ -18,5 +18,5 @@ fun MainWeatherScreen() {
     }
     val vm = getViewModel<MainWeatherVm>()
 
-    Log.d("RESPONSESTATE", "${vm.hourlyWeatherData.collectAsState().value}")
+    Log.d("RESPONSESTATE", "${vm.currentWeather.collectAsState().value}")
 }

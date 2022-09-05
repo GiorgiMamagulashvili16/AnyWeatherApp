@@ -1,7 +1,10 @@
 package com.example.domain.util
 
+import android.util.Log
 import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.ZonedDateTime
 import java.util.*
 
 fun Int.mapWeatherType(): WeatherType {
@@ -19,7 +22,7 @@ fun Int.mapWeatherType(): WeatherType {
 }
 
 fun String.formatToDate(): String {
-
+    Log.d("FORMDA","${SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(this)}")
     val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault())
     return DateFormat.getTimeInstance(DateFormat.SHORT).format(date.parse(this))
 }

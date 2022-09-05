@@ -6,5 +6,5 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val mainScreenModule = module {
-    viewModel { MainWeatherVm(getHourlyWeather = get(), locationService = get()) }
+    viewModel { MainWeatherVm(getHourlyWeather = get(), locationService = get(), getCurrentWeatherUseCase = get()) }
 }
