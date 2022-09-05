@@ -1,14 +1,9 @@
 package com.example.data.model.weather
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import com.example.domain.model.weather.CurrentWeatherModel
 import com.example.domain.model.weather.WeatherInfo
-import com.example.domain.model.weather.WeatherModel
+import com.example.domain.util.formatToDate
 import com.example.domain.util.mapWeatherType
 import com.google.gson.annotations.SerializedName
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 data class HourlyWeatherResponse(
    @SerializedName("hourly")
@@ -21,7 +16,7 @@ data class HourlyWeatherResponse(
 
 
 }
-@RequiresApi(Build.VERSION_CODES.O)
+
 fun CurrentWeather.toWeatherMapResponse(): Map<Int,List<WeatherInfo>> {
     return time.mapIndexed { index, time ->
         val temperature = temperature[index]
@@ -29,11 +24,12 @@ fun CurrentWeather.toWeatherMapResponse(): Map<Int,List<WeatherInfo>> {
         val windSpeed = windSpeed[index]
 
         val weatherInfoModel = WeatherInfo(
-            time = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME).toString(),
+            time = time.formatToDate(),
             temperature = temperature,
             weatherType = weatherCode.toInt().mapWeatherType(),
-            windSpeed = windSpeed
-        )
+            windSpeed = windSpeed,
+
+            )
         HourlyWeatherResponse.WeatherDataWithIndex(
             index = index,
             model = weatherInfoModel

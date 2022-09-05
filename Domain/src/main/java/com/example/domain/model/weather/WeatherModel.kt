@@ -10,5 +10,5 @@ data class WeatherInfo(
     val time:String,
     val temperature: Double,
     val weatherType: WeatherType,
-    val windSpeed: Double
+    val windSpeed: Double,
 )
